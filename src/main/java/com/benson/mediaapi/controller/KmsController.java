@@ -21,7 +21,7 @@ public class KmsController {
     @PostMapping("/encrypt")
     public String encryt(@RequestParam("text") String text) {
 
-        String encryptedText = kmsService.encryt(text);
+        String encryptedText = kmsService.encrypt(text);
         return encryptedText;
     }
 

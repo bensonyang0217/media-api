@@ -14,7 +14,7 @@ public class KmsServiceImpl implements KmsService{
     @Value("${kms-project-id}")
     private String keyId;
     @Override
-    public String encryt(String text) {
+    public String encrypt(String text) {
         byte[] encryptedBytes = kmsTemplate.encryptText(keyId, text);
         String encryptedText = encodeBase64(encryptedBytes);
         return encryptedText;
