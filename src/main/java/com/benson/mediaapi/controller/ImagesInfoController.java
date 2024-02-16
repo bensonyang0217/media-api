@@ -31,7 +31,7 @@ public class ImagesInfoController {
     public ResponseEntity<String> handleImageUploadEvent(@RequestBody NotificationVO body, @RequestHeader HttpHeaders headers) {
 //        CloudEvent event;
         try {
-            logger.info("image name: " + body.getMessage().getAttributes().toString());
+            logger.info("image name: " + body.getMessage().getAttributes().getObjectId());
         } catch (CloudEventRWException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
