@@ -1,5 +1,6 @@
 package com.benson.mediaapi.controller;
 import com.benson.mediaapi.service.imagesprocess.ImagesService;
+import com.benson.mediaapi.vo.NotificationVO;
 import io.cloudevents.CloudEvent;
 import io.cloudevents.rw.CloudEventRWException;
 import org.slf4j.Logger;
@@ -27,22 +28,18 @@ public class ImagesInfoController {
     }
 
     @PostMapping("/scaling")
-    public ResponseEntity<String> handleImageUploadEvent(@RequestBody String body, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<String> handleImageUploadEvent(@RequestBody NotificationVO body, @RequestHeader HttpHeaders headers) {
 //        CloudEvent event;
-//        try {
-//            event =
-//                    CloudEventHttpUtils.fromHttp(headers)
-//                            .withData(headers.getContentType().toString(), body.getBytes())
-//                            .build();
-//        } catch (CloudEventRWException e) {
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//        }
-//
+        try {
+            logger.info("image name: " + body.getMessage().getAttributes().toString());
+        } catch (CloudEventRWException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
 //        String ceSubject = event.getSubject();
-//        String msg = "Detected change in Cloud Storage bucket: ";
-////                + ceSubject;
+//        String msg = "Detected change in Cloud Storage bucket: " + ceSubject;
         logger.info("---Image processed---");
-        logger.info(body);
+
 
         return ResponseEntity.ok("Image processed");
     }
