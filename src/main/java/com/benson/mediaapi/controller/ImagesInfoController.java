@@ -28,20 +28,21 @@ public class ImagesInfoController {
 
     @PostMapping("/scaling")
     public ResponseEntity<String> handleImageUploadEvent(@RequestBody String body, @RequestHeader HttpHeaders headers) {
-        CloudEvent event;
-        try {
-            event =
-                    CloudEventHttpUtils.fromHttp(headers)
-                            .withData(headers.getContentType().toString(), body.getBytes())
-                            .build();
-        } catch (CloudEventRWException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-
-        String ceSubject = event.getSubject();
-        String msg = "Detected change in Cloud Storage bucket: " + ceSubject;
+//        CloudEvent event;
+//        try {
+//            event =
+//                    CloudEventHttpUtils.fromHttp(headers)
+//                            .withData(headers.getContentType().toString(), body.getBytes())
+//                            .build();
+//        } catch (CloudEventRWException e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//
+//        String ceSubject = event.getSubject();
+//        String msg = "Detected change in Cloud Storage bucket: ";
+////                + ceSubject;
         logger.info("---Image processed---");
-        logger.info(msg);
+        logger.info(body);
 
         return ResponseEntity.ok("Image processed");
     }
