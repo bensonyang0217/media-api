@@ -45,7 +45,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         boolean result = userService.register(user);
-        if (result !=true){
+        if (!result){
             return ResponseEntity.badRequest().body("Fail");
         }
         return ResponseEntity.ok("User registered successfully");

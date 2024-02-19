@@ -1,18 +1,30 @@
 package com.benson.mediaapi.service.imagesprocess;
 
 import com.benson.mediaapi.controller.ImagesInfoController;
+import com.benson.mediaapi.model.ImageInfo;
+import com.benson.mediaapi.repository.ImageInfoRepository;
+import com.benson.mediaapi.utils.AuthUtils;
+import com.benson.mediaapi.vo.RespImageInfoVO;
+import com.google.api.client.util.DateTime;
 import com.google.cloud.storage.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ImagesServiceImpl implements ImagesService{
@@ -23,6 +35,13 @@ public class ImagesServiceImpl implements ImagesService{
 
     @Value("${gcp.storage.bucket-name}")
     private String gcpBucket;
+
+    @Value("${images.url}")
+    private String imagesUrl;
+
+    @Autowired
+    private ImageInfoRepository imageInfoRepository;
+
     @Override
     public String upload(MultipartFile image) {
         if (image.isEmpty()) {
@@ -33,8 +52,29 @@ public class ImagesServiceImpl implements ImagesService{
         String suffixName = filename.substring(filename.lastIndexOf("."));
         filename = UUID.randomUUID() + suffixName;
         uploadToGCS(image, filename);
-
+        createImageInfo(filename, image.getSize());
         return filename;
+    }
+
+    @Override
+    public List<RespImageInfoVO> imagesInfoList() {
+        String baseImgUrl = imagesUrl;
+        int userId = AuthUtils.getUserId();
+        List<ImageInfo> imageInfoList = imageInfoRepository.findByUserId((long) userId);
+        List<RespImageInfoVO> respList = imageInfoList.stream()
+                .map(imageInfo -> {
+                    RespImageInfoVO respImageInfoVO =  new RespImageInfoVO();
+                    BeanUtils.copyProperties(imageInfo, respImageInfoVO);
+                    String uri = UriComponentsBuilder
+                            .fromUriString(baseImgUrl) // 基礎URL
+                            .path("/api/images/read-images") // 添加路徑
+                            .queryParam("file_name", imageInfo.getThumbnailUrl()) // 添加查詢參數
+                            .toUriString(); // 轉換為字符串
+                    respImageInfoVO.setThumbnailUrl(uri);
+                    return  respImageInfoVO;
+                }).collect(Collectors.toList());
+
+        return respList;
     }
 
     private void uploadToGCS(MultipartFile image, String fileName){
@@ -67,5 +107,17 @@ public class ImagesServiceImpl implements ImagesService{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private ImageInfo createImageInfo(String filename, Long size){
+        Long userId = (long) AuthUtils.getUserId();
+        ImageInfo imageInfo = new ImageInfo();
+        imageInfo.setFileName(filename);
+        imageInfo.setFileSize(size);
+        imageInfo.setThumbnailUrl(filename);
+        imageInfo.setUploadDate(LocalDateTime.now());
+        imageInfo.setUserId(userId);
+        imageInfo.setThumbnailStatus(false);
+        return imageInfoRepository.save(imageInfo);
     }
 }
