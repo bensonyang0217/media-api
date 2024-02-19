@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ImageInfoRepository extends JpaRepository<ImageInfo, Long> {
-
+    ImageInfo findByFileName(String fileName);
     List<ImageInfo> findByUserId(Long userId);
 }

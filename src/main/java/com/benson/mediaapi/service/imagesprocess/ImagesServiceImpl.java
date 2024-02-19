@@ -77,6 +77,13 @@ public class ImagesServiceImpl implements ImagesService{
         return respList;
     }
 
+    @Override
+    public ImageInfo updateImageStatus(String fileName) {
+        ImageInfo imageInfo = imageInfoRepository.findByFileName(fileName);
+        imageInfo.setThumbnailStatus(true);
+        return imageInfoRepository.save(imageInfo);
+    }
+
     private void uploadToGCS(MultipartFile image, String fileName){
         String resultPath = null;
         try {

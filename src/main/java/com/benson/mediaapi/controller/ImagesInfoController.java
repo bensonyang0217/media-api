@@ -1,4 +1,5 @@
 package com.benson.mediaapi.controller;
+import com.benson.mediaapi.model.ImageInfo;
 import com.benson.mediaapi.service.imagesprocess.ImagesService;
 import com.benson.mediaapi.vo.NotificationVO;
 import com.benson.mediaapi.vo.RespImageInfoVO;
@@ -81,7 +82,6 @@ public class ImagesInfoController {
         Path filePath = Paths.get(name);
         String mimeType = Files.probeContentType(filePath);
         if (mimeType == null) {
-
             mimeType = "application/octet-stream";
         }
         headers.setContentType(MediaType.parseMediaType(mimeType));
@@ -89,5 +89,11 @@ public class ImagesInfoController {
         headers.setContentDispositionFormData("attachment", name);
 
         return new ResponseEntity<>(data, headers, HttpStatus.OK);
+    }
+
+    @PatchMapping("status/{id}")
+    public Boolean updateImagesStatus(@PathVariable String id){
+        ImageInfo imageInfo = imagesService.updateImageStatus(id);
+        return imageInfo.isThumbnailStatus();
     }
 }
