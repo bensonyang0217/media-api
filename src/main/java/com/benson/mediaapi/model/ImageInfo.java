@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 public class ImageInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fileName;
     private long fileSize;
