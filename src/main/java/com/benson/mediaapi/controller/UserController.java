@@ -1,8 +1,10 @@
 package com.benson.mediaapi.controller;
 
 import com.benson.mediaapi.model.User;
+import com.benson.mediaapi.repository.UserRepository;
 import com.benson.mediaapi.service.users.CunstomUserDetailsService;
 import com.benson.mediaapi.service.users.UserService;
+import com.benson.mediaapi.utils.AuthUtils;
 import com.benson.mediaapi.utils.JwtUtils;
 import com.benson.mediaapi.vo.AuthReqVO;
 import com.benson.mediaapi.vo.AuthRespVO;
@@ -14,6 +16,10 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -33,6 +39,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping("/token")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthReqVO user) throws Exception {
         String token = userService.login(user);
@@ -47,6 +56,15 @@ public class UserController {
             return ResponseEntity.badRequest().body("Fail");
         }
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @GetMapping("me")
+    public ResponseEntity<?> getUserInfo(){
+        int userId = AuthUtils.getUserId();
+        Optional<User> user = userRepository.findById((long) userId);
+        Map<String, String> userName = new HashMap<>();
+        userName.put("name",user.get().getName());
+        return ResponseEntity.ok(userName);
     }
 
     private void authenticate(String username, String password) throws Exception {
