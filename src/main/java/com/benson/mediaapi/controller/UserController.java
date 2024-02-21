@@ -53,7 +53,7 @@ public class UserController {
     public ResponseEntity<?> register(@RequestBody User user) {
         User userExist = userRepository.findByUsername(user.getUsername());
         Map<String, String> errMessage = new HashMap<>();
-        errMessage.put("error message", "username exist");
+        errMessage.put("error", "username exist");
         if (userExist != null){
             return ResponseEntity.badRequest().body(errMessage);
         }
