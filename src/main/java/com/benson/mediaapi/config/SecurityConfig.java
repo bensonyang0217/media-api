@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/**").permitAll()
                         .requestMatchers("/api/images/scaling").permitAll()
                         .requestMatchers("/api/images/status/**").permitAll()
+                        .requestMatchers("/api/images/read-images/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
                 .sessionManagement(policy -> policy.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
