@@ -51,6 +51,12 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
+        User userExist = userRepository.findByUsername(user.getUsername());
+        Map<String, String> errMessage = new HashMap<>();
+        errMessage.put("error message", "username exist");
+        if (userExist != null){
+            return ResponseEntity.badRequest().body(errMessage);
+        }
         boolean result = userService.register(user);
         if (!result){
             return ResponseEntity.badRequest().body("Fail");
