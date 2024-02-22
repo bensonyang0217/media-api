@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -122,7 +123,7 @@ public class ImagesServiceImpl implements ImagesService{
         imageInfo.setFileName(filename);
         imageInfo.setFileSize(size);
         imageInfo.setThumbnailUrl(filename);
-        imageInfo.setUploadDate(LocalDateTime.now());
+        imageInfo.setUploadDate(LocalDateTime.now(ZoneId.of("Asia/Taipei")));
         imageInfo.setUserId(userId);
         imageInfo.setThumbnailStatus(false);
         return imageInfoRepository.save(imageInfo);
