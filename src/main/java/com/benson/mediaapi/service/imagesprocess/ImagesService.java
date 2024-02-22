@@ -11,6 +11,6 @@ public interface ImagesService {
 
     List<RespImageInfoVO> imagesInfoList();
 
-    ImageInfo updateImageStatus(String fileName);
+    ImageInfo updateImageStatus(String fileName, int size);
 
 }

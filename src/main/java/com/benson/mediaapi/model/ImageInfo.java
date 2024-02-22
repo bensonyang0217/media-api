@@ -14,6 +14,7 @@ public class ImageInfo {
     private Long id;
     private String fileName;
     private long fileSize;
+    private  long scalingSize;
     private LocalDateTime uploadDate;
     private boolean thumbnailStatus;
     private String thumbnailUrl;
@@ -73,4 +74,12 @@ public class ImageInfo {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+    public long getScalingSize() {
+        return scalingSize;
+    }
+
+    public void setScalingSize(long scalingSize) {
+        this.scalingSize = scalingSize;
+    }
+
 }

@@ -49,11 +49,11 @@ public class ImagesServiceImpl implements ImagesService{
             throw new RuntimeException("無法存儲空檔案");
         }
 
-        String filename = image.getOriginalFilename();
-        String suffixName = filename.substring(filename.lastIndexOf("."));
-        filename = UUID.randomUUID() + suffixName;
+        String _filename = image.getOriginalFilename();
+        String suffixName = _filename.substring(_filename.lastIndexOf("."));
+        String filename = UUID.randomUUID() + suffixName;
         uploadToGCS(image, filename);
-        createImageInfo(filename, image.getSize());
+        createImageInfo(_filename, image.getSize(), filename);
         return filename;
     }
 
@@ -79,9 +79,10 @@ public class ImagesServiceImpl implements ImagesService{
     }
 
     @Override
-    public ImageInfo updateImageStatus(String fileName) {
-        ImageInfo imageInfo = imageInfoRepository.findByFileName(fileName);
+    public ImageInfo updateImageStatus(String fileName, int size) {
+        ImageInfo imageInfo = imageInfoRepository.findBythumbnailUrl(fileName);
         imageInfo.setThumbnailStatus(true);
+        imageInfo.setScalingSize(size);
         return imageInfoRepository.save(imageInfo);
     }
 
@@ -117,12 +118,12 @@ public class ImagesServiceImpl implements ImagesService{
         }
     }
 
-    private ImageInfo createImageInfo(String filename, Long size){
+    private ImageInfo createImageInfo(String filename, Long size, String url){
         Long userId = (long) AuthUtils.getUserId();
         ImageInfo imageInfo = new ImageInfo();
         imageInfo.setFileName(filename);
         imageInfo.setFileSize(size);
-        imageInfo.setThumbnailUrl(filename);
+        imageInfo.setThumbnailUrl(url);
         imageInfo.setUploadDate(LocalDateTime.now(ZoneId.of("Asia/Taipei")));
         imageInfo.setUserId(userId);
         imageInfo.setThumbnailStatus(false);

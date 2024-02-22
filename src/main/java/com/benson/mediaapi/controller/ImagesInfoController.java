@@ -3,6 +3,7 @@ import com.benson.mediaapi.model.ImageInfo;
 import com.benson.mediaapi.service.imagesprocess.ImagesService;
 import com.benson.mediaapi.vo.NotificationVO;
 import com.benson.mediaapi.vo.RespImageInfoVO;
+import com.benson.mediaapi.vo.ScalingInfoReqVO;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
@@ -92,8 +93,9 @@ public class ImagesInfoController {
     }
 
     @PatchMapping("status/{id}")
-    public Boolean updateImagesStatus(@PathVariable String id){
-        ImageInfo imageInfo = imagesService.updateImageStatus(id);
+    public Boolean updateImagesStatus(@PathVariable String id, @RequestBody ScalingInfoReqVO scalingInfo){
+        int size = scalingInfo.getSize();
+        ImageInfo imageInfo = imagesService.updateImageStatus(id,size);
         return imageInfo.isThumbnailStatus();
     }
 }
