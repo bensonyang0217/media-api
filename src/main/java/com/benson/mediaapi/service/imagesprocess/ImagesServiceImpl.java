@@ -61,7 +61,7 @@ public class ImagesServiceImpl implements ImagesService{
     public List<RespImageInfoVO> imagesInfoList() {
         String baseImgUrl = imagesUrl;
         int userId = AuthUtils.getUserId();
-        List<ImageInfo> imageInfoList = imageInfoRepository.findByUserId((long) userId);
+        List<ImageInfo> imageInfoList = imageInfoRepository.findByUserIdOrderByUploadDateDesc((long) userId);
         List<RespImageInfoVO> respList = imageInfoList.stream()
                 .map(imageInfo -> {
                     RespImageInfoVO respImageInfoVO =  new RespImageInfoVO();

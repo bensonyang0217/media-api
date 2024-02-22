@@ -10,4 +10,5 @@ import java.util.List;
 public interface ImageInfoRepository extends JpaRepository<ImageInfo, Long> {
     ImageInfo findByFileName(String fileName);
     List<ImageInfo> findByUserId(Long userId);
+    List<ImageInfo> findByUserIdOrderByUploadDateDesc(Long userId);
 }
