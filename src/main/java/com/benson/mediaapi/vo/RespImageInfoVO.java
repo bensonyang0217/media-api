@@ -11,6 +11,8 @@ public class RespImageInfoVO implements Serializable {
     private String fileName;
     private long fileSize;
 
+    private long scalingSize;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime uploadDate;
     private boolean thumbnailStatus;
@@ -70,6 +72,14 @@ public class RespImageInfoVO implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public long getScalingSize() {
+        return scalingSize;
+    }
+
+    public void setScalingSize(long scalingSize) {
+        this.scalingSize = scalingSize;
     }
 
 }
