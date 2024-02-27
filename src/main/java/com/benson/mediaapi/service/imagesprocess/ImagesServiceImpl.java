@@ -86,6 +86,12 @@ public class ImagesServiceImpl implements ImagesService{
         return imageInfoRepository.save(imageInfo);
     }
 
+    @Override
+    public Boolean delImagesInfo(Long id) {
+        imageInfoRepository.deleteById(id);
+        return true;
+    }
+
     private void uploadToGCS(MultipartFile image, String fileName){
         String resultPath = null;
         try {

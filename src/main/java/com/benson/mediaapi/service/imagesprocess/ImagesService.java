@@ -13,4 +13,6 @@ public interface ImagesService {
 
     ImageInfo updateImageStatus(String fileName, int size);
 
+    Boolean delImagesInfo(Long id);
+
 }

@@ -100,4 +100,9 @@ public class ImagesInfoController {
         return imageInfo.isThumbnailStatus();
 //        return null;
     }
+
+    @DeleteMapping("/{id}")
+    public Boolean delImagesInfo(@PathVariable String id){
+        return imagesService.delImagesInfo(Long.valueOf(id));
+    }
 }
