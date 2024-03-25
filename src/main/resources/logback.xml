@@ -1,0 +1,14 @@
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+  </appender>
+
+  <root level="info">
+    <!-- 在這裡，只添加控制台輸出 -->
+    <appender-ref ref="STDOUT" />
+    <!-- 如果你不希望在本地也輸出到GCP，那麼可以暫時註解掉下面這行 -->
+    <!--         <appender-ref ref="CLOUD" />-->
+  </root>
+
+</configuration>

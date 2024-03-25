@@ -8,6 +8,7 @@ import com.benson.mediaapi.utils.AuthUtils;
 import com.benson.mediaapi.utils.JwtUtils;
 import com.benson.mediaapi.vo.AuthReqVO;
 import com.benson.mediaapi.vo.AuthRespVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/user")
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -46,6 +48,7 @@ public class UserController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthReqVO user) throws Exception {
         String token = userService.login(user);
         AuthRespVO response = new AuthRespVO(token);
+        log.info("token: "+ token);
         return (ResponseEntity<?>) ResponseEntity.ok(response);
     }
 

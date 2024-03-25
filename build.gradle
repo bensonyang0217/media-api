@@ -30,7 +30,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'io.cloudevents', name: 'cloudevents-api', version: '2.5.0'
 	implementation group: 'io.cloudevents', name: 'cloudevents-spring', version: '2.5.0'
-
+	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '7.4'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 tasks.named('test') {
