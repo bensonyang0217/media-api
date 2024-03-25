@@ -9,6 +9,9 @@ import com.benson.mediaapi.utils.JwtUtils;
 import com.benson.mediaapi.vo.AuthReqVO;
 import com.benson.mediaapi.vo.AuthRespVO;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +30,7 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 @Slf4j
 public class UserController {
+    private static final Logger customLog = LoggerFactory.getLogger("CustomLogger");
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -48,7 +52,15 @@ public class UserController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthReqVO user) throws Exception {
         String token = userService.login(user);
         AuthRespVO response = new AuthRespVO(token);
-        log.info("token: "+ token);
+        MDC.put("eventSourceHostName", "benson.com");
+        MDC.put("eventSourceIPAddress", "127.0.0.1");
+        MDC.put("mcSmcAlias", "USA");
+        MDC.put("mc_parameter", "404");
+        MDC.put("mc_object", "media-api");
+        MDC.put("mc_object_owner", "Benson");
+        MDC.put("mc_object_class", "media-api");
+        MDC.put("cub_notify_mail", "test@gmail.com");
+        customLog.info(token);
         return (ResponseEntity<?>) ResponseEntity.ok(response);
     }
 

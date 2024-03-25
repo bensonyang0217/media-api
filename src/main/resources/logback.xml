@@ -4,11 +4,34 @@
     <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
   </appender>
 
+  <appender name="CUSTOM" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>
+        {
+        "timestamp": "%d{yyyy-MM-dd HH:mm:ss}",
+        "eventSourceHostName": "%X{eventSourceHostName}",
+        "eventSourceIPAddress": "%X{eventSourceIPAddress}",
+        "attributes": {
+            "CLASS": "CUB_AP_NOTIFY",
+            "severity": "%level",
+            "msg": "%msg",
+            "mc_smc_alias": "%X{mcSmcAlias}",
+            "mc_parameter": "%X{mcParameter}",
+            "mc_object": "%X{mcObject}",
+            "mc_object_owner": "%X{mcObjectOwner}",
+            "mc_object_class": "%X{mcObjectClass}",
+            "cub_notify_mail": "%X{cubNotifyMail}"
+          }
+        }
+      </pattern>
+    </encoder>
+  </appender>
   <root level="info">
-    <!-- 在這裡，只添加控制台輸出 -->
     <appender-ref ref="STDOUT" />
-    <!-- 如果你不希望在本地也輸出到GCP，那麼可以暫時註解掉下面這行 -->
-<!--    <appender-ref ref="CLOUD" />-->
   </root>
+
+  <logger name="CustomLogger" level="info" additivity="false">
+    <appender-ref ref="CUSTOM" />
+  </logger>
 
 </configuration>
