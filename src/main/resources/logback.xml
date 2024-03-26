@@ -1,4 +1,8 @@
 <configuration>
+    <property name="APID" value="SDKPOC01UT" />
+    <property name="SERVICE_ID" value="ApiTemplate" />
+    <property name="EVENT_SOURCE_HOST_NAME" value="PC0000000" />
+    <property name="EVENT_SOURCE_IP" value="0.0.0.0" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
@@ -10,9 +14,16 @@
                 <pattern>
                     <pattern>
                         {
-                        "timestamp": "%d{yyyy-MM-dd HH:mm:ss}",
-                        "eventSourceHostName": "${eventSourceHostName}",
-                        "eventSourceIPAddress": "${eventSourceIPAddress}",
+                        "TraceId": "6e0026fcc43abcbd7f09bc343c5e5bd6",
+                        "SystemTime": "%d{yyyy-MM-dd HH:mm:ss}",
+                        "Level": "%level",
+                        "APID": "${APID}",
+                        "ServiceID": "${SERVICE_ID}",
+                        "CriticalLog": {
+                        "Message": "%X{logMessage}",
+                        "TrueSight": {
+                        "eventSourceHostName": "${images-url}",
+                        "eventSourceIPAddress": "${EVENT_SOURCE_IP}",
                         "attributes": {
                         "CLASS": "CUB_AP_NOTIFY",
                         "severity": "%level",
@@ -22,7 +33,30 @@
                         "mc_object": "%X{mcObject}",
                         "mc_object_owner": "%X{mcObjectOwner}",
                         "mc_object_class": "%X{mcObjectClass}",
-                        "cub_notify_mail": "%X{cubNotifyMail}"
+                        "cub_notify_mail": "%X{cubNotifyMail}",
+                        "$type": "TrueSightAttribute"
+                        },
+                        "$type": "TrueSightParam"
+                        },
+                        "CTeam": {
+                        "MwHeader": {
+                        "MsgId": "CNA-C-CTMSGPUBO001",
+                        "Source": "SDKPOC01UT",
+                        "TxnSeq": "3680a371-104a-415a-9ab9-911cfc0b9b18",
+                        "$type": "MwHeader"
+                        },
+                        "TranRq": {
+                        "Account": "va_851a6b1d164b4f3abf",
+                        "ApiKey": "d5e4b041-feaa-46d8-aaa9-5f488d8e9618",
+                        "TeamSn": "123",
+                        "ContentType": "1",
+                        "Subject": "[CRITICAL] Hello:001",
+                        "TextContent": "錯誤訊息內容",
+                        "$type": "TranRq"
+                        },
+                        "$type": "CTeamParam"
+                        },
+                        "$type": "CriticalLog"
                         }
                         }
                     </pattern>
