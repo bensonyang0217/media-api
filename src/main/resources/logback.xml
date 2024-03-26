@@ -1,8 +1,15 @@
 <configuration>
-    <property name="APID" value="SDKPOC01UT" />
-    <property name="SERVICE_ID" value="ApiTemplate" />
-    <property name="EVENT_SOURCE_HOST_NAME" value="${images-url}" />
-    <property name="EVENT_SOURCE_IP" value="${images-url}" />
+    <property name="APID" value="SDKPOC01UT"/>
+    <property name="SERVICE_ID" value="ApiTemplate"/>
+    <property name="EVENT_SOURCE_HOST_NAME" value="${images-url}"/>
+    <property name="EVENT_SOURCE_IP" value="${images-url}"/>
+    <property name="MC_SMC_ALIAS" value="${images-url}"/>
+    <property name="MC_PARAMETER" value="${images-url}"/>
+    <property name="MC_OBJECT" value="${images-url}"/>
+    <property name="MC_OBJECT_OWNER" value="${images-url}"/>
+    <property name="MC_OBJECT_CLASS" value="${images-url}"/>
+    <property name="MC_OBJECT" value="${images-url}"/>
+    <property name="CUB_NOTIFY_MAIL" value="${images-url}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
@@ -19,7 +26,7 @@
                         "Level": "%level",
                         "APID": "${APID}",
                         "ServiceID": "${SERVICE_ID}",
-                        "CriticalLog": {
+                        "AlertLog": {
                         "Message": "%X{mailMessage}",
                         "TrueSight": {
                         "eventSourceHostName": "${EVENT_SOURCE_HOST_NAME}",
@@ -28,12 +35,12 @@
                         "CLASS": "CUB_AP_NOTIFY",
                         "severity": "%level",
                         "msg": "%msg",
-                        "mc_smc_alias": "%X{mcSmcAlias}",
-                        "mc_parameter": "%X{mcParameter}",
-                        "mc_object": "%X{mcObject}",
-                        "mc_object_owner": "%X{mcObjectOwner}",
-                        "mc_object_class": "%X{mcObjectClass}",
-                        "cub_notify_mail": "%X{cubNotifyMail}",
+                        "mc_smc_alias": "${MC_SMC_ALIAS}",
+                        "mc_parameter": "${MC_PARAMETER}",
+                        "mc_object": "${MC_OBJECT}",
+                        "mc_object_owner": "${MC_OBJECT_OWNER}",
+                        "mc_object_class": "${MC_OBJECT_CLASS}",
+                        "cub_notify_mail": "${CUB_NOTIFY_MAIL}",
                         "$type": "TrueSightAttribute"
                         },
                         "$type": "TrueSightParam"
@@ -64,7 +71,7 @@
             </providers>
         </encoder>
     </appender>
-    <root level="info">
+    <root level="WARN">
         <appender-ref ref="CUSTOM"/>
     </root>
 
