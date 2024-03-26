@@ -30,7 +30,7 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 @Slf4j
 public class UserController {
-    private static final Logger customLog = LoggerFactory.getLogger("CustomLogger");
+    private static final Logger customLog = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -55,11 +55,11 @@ public class UserController {
         MDC.put("eventSourceHostName", "benson.com");
         MDC.put("eventSourceIPAddress", "127.0.0.1");
         MDC.put("mcSmcAlias", "USA");
-        MDC.put("mc_parameter", "404");
-        MDC.put("mc_object", "media-api");
-        MDC.put("mc_object_owner", "Benson");
-        MDC.put("mc_object_class", "media-api");
-        MDC.put("cub_notify_mail", "test@gmail.com");
+        MDC.put("mcParameter", "404");
+        MDC.put("mcObject", "media-api");
+        MDC.put("mcObjectOwner", "Benson");
+        MDC.put("mcObjectClass", "media-api");
+        MDC.put("cubNotifyMail", "test@gmail.com");
         customLog.info(token);
         return (ResponseEntity<?>) ResponseEntity.ok(response);
     }

@@ -1,41 +1,41 @@
 <configuration>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
-  </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
 
-  <appender name="CUSTOM" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-        <providers>
-            <pattern>
-              <pattern>
-                {
-                "timestamp": "%d{yyyy-MM-dd HH:mm:ss}",
-                "eventSourceHostName": "%X{eventSourceHostName}",
-                "eventSourceIPAddress": "%X{eventSourceIPAddress}",
-                "attributes": {
-                    "CLASS": "CUB_AP_NOTIFY",
-                    "severity": "%level",
-                    "msg": "%msg",
-                    "mc_smc_alias": "%X{mcSmcAlias}",
-                    "mc_parameter": "%X{mcParameter}",
-                    "mc_object": "%X{mcObject}",
-                    "mc_object_owner": "%X{mcObjectOwner}",
-                    "mc_object_class": "%X{mcObjectClass}",
-                    "cub_notify_mail": "%X{cubNotifyMail}"
-                  }
-                }
-              </pattern>
-            </pattern>
-        </providers>
-    </encoder>
-  </appender>
-  <root level="info">
-    <appender-ref ref="CUSTOM" />
-  </root>
+    <appender name="CUSTOM" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "timestamp": "%d{yyyy-MM-dd HH:mm:ss}",
+                        "eventSourceHostName": "${eventSourceHostName}",
+                        "eventSourceIPAddress": "${eventSourceIPAddress}",
+                        "attributes": {
+                        "CLASS": "CUB_AP_NOTIFY",
+                        "severity": "%level",
+                        "msg": "%msg",
+                        "mc_smc_alias": "%X{mcSmcAlias}",
+                        "mc_parameter": "%X{mcParameter}",
+                        "mc_object": "%X{mcObject}",
+                        "mc_object_owner": "%X{mcObjectOwner}",
+                        "mc_object_class": "%X{mcObjectClass}",
+                        "cub_notify_mail": "%X{cubNotifyMail}"
+                        }
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+    <root level="info">
+        <appender-ref ref="CUSTOM"/>
+    </root>
 
-<!--  <logger name="CustomLogger" level="info" additivity="false">-->
-<!--    <appender-ref ref="CUSTOM" />-->
-<!--  </logger>-->
+    <!--  <logger name="CustomLogger" level="info" additivity="false">-->
+    <!--    <appender-ref ref="CUSTOM" />-->
+    <!--  </logger>-->
 
 </configuration>
