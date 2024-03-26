@@ -1,8 +1,8 @@
 <configuration>
     <property name="APID" value="SDKPOC01UT" />
     <property name="SERVICE_ID" value="ApiTemplate" />
-    <property name="EVENT_SOURCE_HOST_NAME" value="PC0000000" />
-    <property name="EVENT_SOURCE_IP" value="0.0.0.0" />
+    <property name="EVENT_SOURCE_HOST_NAME" value="${images-url}" />
+    <property name="EVENT_SOURCE_IP" value="${images-url}" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
@@ -20,9 +20,9 @@
                         "APID": "${APID}",
                         "ServiceID": "${SERVICE_ID}",
                         "CriticalLog": {
-                        "Message": "%X{logMessage}",
+                        "Message": "%X{mailMessage}",
                         "TrueSight": {
-                        "eventSourceHostName": "${images-url}",
+                        "eventSourceHostName": "${EVENT_SOURCE_HOST_NAME}",
                         "eventSourceIPAddress": "${EVENT_SOURCE_IP}",
                         "attributes": {
                         "CLASS": "CUB_AP_NOTIFY",
