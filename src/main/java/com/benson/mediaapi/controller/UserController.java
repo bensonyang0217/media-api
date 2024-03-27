@@ -30,7 +30,9 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 @Slf4j
 public class UserController {
-    private static final Logger customLog = LoggerFactory.getLogger(UserController.class);
+    private static final Logger criticalLog = LoggerFactory.getLogger("CriticalLog");
+    private static final Logger majorLog = LoggerFactory.getLogger("MajorLog");
+    private static final Logger minorLog = LoggerFactory.getLogger("MinorLog");
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -52,15 +54,9 @@ public class UserController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthReqVO user) throws Exception {
         String token = userService.login(user);
         AuthRespVO response = new AuthRespVO(token);
-        MDC.put("eventSourceHostName", "benson.com");
-        MDC.put("eventSourceIPAddress", "127.0.0.1");
-        MDC.put("mcSmcAlias", "USA");
-        MDC.put("mcParameter", "404");
-        MDC.put("mcObject", "media-api");
-        MDC.put("mcObjectOwner", "Benson");
-        MDC.put("mcObjectClass", "media-api");
-        MDC.put("cubNotifyMail", "test@gmail.com");
-        customLog.info(token);
+        criticalLog.error(token);
+        majorLog.error(token);
+        minorLog.error(token);
         return (ResponseEntity<?>) ResponseEntity.ok(response);
     }
 
