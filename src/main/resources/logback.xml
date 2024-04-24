@@ -79,20 +79,19 @@
     <appender name="CRITICAL" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
-                <pattern>
-                    <pattern>
-                        {
-                        "APID": "${APID}",
-                        "TraceId": "%X{TRACE_ID}",
-                        "SystemTime": "%d{yyyy-MM-dd HH:mm:ss}",
-                        "LogKey": "%X{LOG_KEY}",
-                        "Data":{
-                        "Subject": "%X{SUBJECT}",
-                        "message": "%msg"
-                        }
-                        }
-                    </pattern>
-                </pattern>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <logLevel/>
+                <threadName/>
+                <loggerName/>
+                <message/>
+                <mdc> <!-- MDC variables are added automatically -->
+                    <key>APID</key>
+                    <key>TRACE_ID</key>
+                    <key>LOG_KEY</key>
+                    <key>SUBJECT</key>
+                </mdc>
             </providers>
         </encoder>
     </appender>
