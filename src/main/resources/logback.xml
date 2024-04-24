@@ -1,4 +1,7 @@
 <configuration>
+    <include resource="org/springframework/cloud/gcp/autoconfigure/logging/logback-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
     <property name="TRACE_ID" value="${TRACE_ID}"/>
     <property name="APID" value="SDKPOC01UT"/>
     <property name="SERVICE_ID" value="ApiTemplate"/>
@@ -95,9 +98,32 @@
             </providers>
         </encoder>
     </appender>
+
+    <appender name="CLOUD" class="com.google.cloud.logging.logback.LoggingAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.springframework.cloud.gcp.logging.StackdriverJsonLayout">
+                <includeTraceId>true</includeTraceId>
+                <includeSpanId>true</includeSpanId>
+                <includeLevel>true</includeLevel>
+                <includeThreadName>true</includeThreadName>
+                <includeMDC>true</includeMDC>
+                <includeLoggerName>true</includeLoggerName>
+                <includeFormattedMessage>true</includeFormattedMessage>
+                <includeExceptionInMessage>true</includeExceptionInMessage>
+                <includeContextName>true</includeContextName>
+                <includeMessage>false</includeMessage>
+                <includeException>false</includeException>
+            </layout>
+        </encoder>
+    </appender>
+
     <root level="INFO">
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="CLOUD"/>
+<!--        <appender-ref ref="STACKDRIVER" />-->
     </root>
+<!--    <root level="INFO">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </root>-->
 
     <logger name="CriticalLog" level="WARN" additvity="false">
         <appender-ref ref="CRITICAL"/>

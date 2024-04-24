@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 @Service
 @Slf4j
@@ -23,6 +25,8 @@ public class LoggerServiceImpl implements LoggerService {
     private static final Logger logger = LoggerFactory.getLogger("CriticalLog");
     private static final Logger majorLog = LoggerFactory.getLogger("MajorLog");
     private static final Logger minorLog = LoggerFactory.getLogger("MinorLog");
+
+    private static final Log LOGGER = LogFactory.getLog(LoggerServiceImpl.class);
 
     @Override
     public <T> void error(T logObject, AlertLevel alertLevel) {
@@ -60,7 +64,8 @@ public class LoggerServiceImpl implements LoggerService {
         dataMessage.put("Subject", subject);
         dataMessage.put("message", message);
         logMessage.put("Data", dataMessage);
-        logger.error(logMessage.toString());
+//        logger.error(logMessage.toString());
+        LOGGER.error("123");
 
     }
 
