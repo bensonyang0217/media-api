@@ -64,7 +64,7 @@
 <!--        <appender-ref ref="CLOUD"/>-->
     </root>
 
-    <logger name="GCPLog" level="ERROR" additvity="false">
+    <logger name="GCPLog" level="INFO" additvity="false">
         <appender-ref ref="CLOUD"/>
     </logger>
 
