@@ -86,12 +86,12 @@
                 <threadName/>
                 <loggerName/>
                 <message/>
-                <mdc> <!-- MDC variables are added automatically -->
-                    <key>APID</key>
-                    <key>TRACE_ID</key>
-                    <key>LOG_KEY</key>
-                    <key>SUBJECT</key>
-                </mdc>
+<!--                <mdc> &lt;!&ndash; MDC variables are added automatically &ndash;&gt;-->
+<!--                    <key>APID</key>-->
+<!--                    <key>TRACE_ID</key>-->
+<!--                    <key>LOG_KEY</key>-->
+<!--                    <key>SUBJECT</key>-->
+<!--                </mdc>-->
             </providers>
         </encoder>
     </appender>
