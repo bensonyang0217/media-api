@@ -12,6 +12,7 @@
     <property name="MC_OBJECT_CLASS" value="${MC_OBJECT_CLASS}"/>
     <property name="CUB_NOTIFY_MAIL" value="${CUB_NOTIFY_MAIL}"/>
     <property name="API_KEY" value="15e5ae8a-755c-479b-a5ea-acab4ea63daf"/>
+    <property name="email" value="test@test.com"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
@@ -29,9 +30,7 @@
                         "ServiceID": "${SERVICE_ID}",
                         "MinorLog": {
                         "LogKey": "Minor",
-                        "Message": "%msg",
-                        "ApOwner": "${AP_OWNER}",
-                        "Email":"%X{apMail}"
+                        "Message": "%msg"
                         }
                         }
                     </pattern>
@@ -54,7 +53,7 @@
                         "LogKey": "Major",
                         "Message": "%msg",
                         "ApOwner": "${AP_OWNER}",
-                        "Email":"%X{apMail}",
+                        "Email":"${email}",
                         "CTeam": {
                         "MwHeader": {
                         "MsgId": "CNA-C-CTMSGPUBO001",
@@ -83,49 +82,15 @@
                 <pattern>
                     <pattern>
                         {
-                        "TraceId": "6e0026fcc43abcbd7f09bc343c5e5bd6",
-                        "SystemTime": "%d{yyyy-MM-dd HH:mm:ss}",
-                        "Level": "%level",
                         "APID": "${APID}",
-                        "ServiceID": "${SERVICE_ID}",
-                        "CriticalLog": {
-                        "LogKey": "Critical",
-                        "Message": "%X{message}",
-                        "ApOwner": "${AP_OWNER}",
-                        "Email":"%X{apMail}",
-                        "TrueSight": {
-                        "eventSourceHostName": "${EVENT_SOURCE_HOST_NAME}",
-                        "eventSourceIPAddress": "${EVENT_SOURCE_IP}",
-                        "attributes": {
-                        "CLASS": "CUB_AP_NOTIFY",
-                        "severity": "%X{severity}",
-                        "msg": "%msg",
-                        "mc_smc_alias": "${MC_SMC_ALIAS}",
-                        "mc_parameter": "%X{mcParameter}",
-                        "mc_object": "%X{mcObject}",
-                        "mc_object_owner": "${MC_OBJECT_OWNER}",
-                        "mc_object_class": "${MC_OBJECT_CLASS}",
-                        "cub_notify_mail": "${CUB_NOTIFY_MAIL}"
+                        "TraceId": "%X{TRACE_ID}",
+                        "SystemTime": "%d{yyyy-MM-dd HH:mm:ss}",
+                        "LogKey": "%X{LOG_KEY}",
+                        "Data":{
+                        "Subject": "%X{SUBJECT}",
+                        "message": "%msg"
                         }
                         }
-                        },
-                        "CTeam": {
-                        "MwHeader": {
-                        "MsgId": "CNA-C-CTMSGPUBO001",
-                        "Source": "SDKPOC01UT",
-                        "TxnSeq": "%X{txnSeq}"
-                        },
-                        "TranRq": {
-                        "Account": "va_851a6b1d164b4f3abf",
-                        "ApiKey": "${API_KEY}",
-                        "TeamSn": "123",
-                        "ContentType": "1",
-                        "Subject": "%X{subject}",
-                        "TextContent": "%X{textContent}"
-                        }
-                        }
-                        }
-
                     </pattern>
                 </pattern>
             </providers>
