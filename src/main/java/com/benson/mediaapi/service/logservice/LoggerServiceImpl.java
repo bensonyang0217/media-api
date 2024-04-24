@@ -1,15 +1,17 @@
 package com.benson.mediaapi.service.logservice;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.benson.mediaapi.service.logservice.enums.AlertLevel;
 import com.benson.mediaapi.vo.CriticalLogVO;
 import com.benson.mediaapi.vo.MajorVO;
 import com.benson.mediaapi.vo.MessageVO;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
-
+import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -50,19 +52,16 @@ public class LoggerServiceImpl implements LoggerService {
 
     @Override
     public void error(AlertLevel alertLevel, String subject, String message) {
-//        MDC.put("TRACE_ID", UUID.randomUUID().toString().replace("-", ""));
-//        MDC.put("LogKey", alertLevel.toString());
-//        MDC.put("Subject", subject);
-        Map<Object,String> logMessage = new HashMap<>();
+        JSONObject logMessage = new JSONObject();
         logMessage.put("APID","123");
         logMessage.put("TraceId", UUID.randomUUID().toString().replace("-", ""));
-        logMessage.put("LOG_KEY", alertLevel.toString());
-        Map<String, String> dataMessage = new HashMap<>();
+        logMessage.put("LogKey", alertLevel.toString());
+        JSONObject dataMessage = new JSONObject();
         dataMessage.put("Subject", subject);
         dataMessage.put("message", message);
-        logMessage.put("Data", dataMessage.toString());
+        logMessage.put("Data", dataMessage);
         logger.error(logMessage.toString());
-//        MDC.clear();
+
     }
 
     private void logCritical(CriticalLogVO vo) {
