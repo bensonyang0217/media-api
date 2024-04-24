@@ -20,65 +20,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
-    <appender name="MINOR" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <pattern>
-                    <pattern>
-                        {
-                        "TraceId": "${TRACE_ID}",
-                        "SystemTime": "%d{yyyy-MM-dd HH:mm:ss}",
-                        "Level": "%level",
-                        "APID": "${APID}",
-                        "ServiceID": "${SERVICE_ID}",
-                        "MinorLog": {
-                        "LogKey": "Minor",
-                        "Message": "%msg"
-                        }
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
-    <appender name="MAJOR" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <pattern>
-                    <pattern>
-                        {
-                        "TraceId": "6e0026fcc43abcbd7f09bc343c5e5bd6",
-                        "SystemTime": "%d{yyyy-MM-dd HH:mm:ss}",
-                        "Level": "%level",
-                        "APID": "${APID}",
-                        "ServiceID": "${SERVICE_ID}",
-                        "MajorLog": {
-                        "LogKey": "Major",
-                        "Message": "%msg",
-                        "ApOwner": "${AP_OWNER}",
-                        "Email":"${email}",
-                        "CTeam": {
-                        "MwHeader": {
-                        "MsgId": "CNA-C-CTMSGPUBO001",
-                        "Source": "SDKPOC01UT",
-                        "TxnSeq": "%X{txnSeq}"
-                        },
-                        "TranRq": {
-                        "Account": "va_851a6b1d164b4f3abf",
-                        "ApiKey": "${API_KEY}",
-                        "TeamSn": "123",
-                        "ContentType": "1",
-                        "Subject": "%X{subject}",
-                        "TextContent": "%X{textContent}"
-                        }
-                        }
-                        }
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
+
     <appender name="CRITICAL" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
@@ -118,23 +60,11 @@
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="CLOUD"/>
-<!--        <appender-ref ref="STACKDRIVER" />-->
+        <appender-ref ref="STDOUT"/>
     </root>
-<!--    <root level="INFO">-->
-<!--        <appender-ref ref="STDOUT"/>-->
-<!--    </root>-->
 
-    <logger name="CriticalLog" level="WARN" additvity="false">
-        <appender-ref ref="CRITICAL"/>
-    </logger>
-
-    <logger name="MajorLog" level="WARN" additvity="false">
-        <appender-ref ref="MAJOR"/>
-    </logger>
-
-    <logger name="MinorLog" level="WARN" additvity="false">
-        <appender-ref ref="MINOR"/>
+    <logger name="GCPLog" level="WARN" additvity="false">
+        <appender-ref ref="CLOUD"/>
     </logger>
 
 </configuration>
